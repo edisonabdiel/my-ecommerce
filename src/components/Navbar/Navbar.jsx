@@ -4,7 +4,7 @@ import { ShoppingCart } from '@material-ui/icons';
 
 import useStyles from './styles'
 
-import logo from '../../assets/pyramid-shape.png'
+import logo from '../../assets/pngkite-1432108.png'
 
 
 const Navbar = ({ totalItems }) => {
@@ -16,8 +16,8 @@ const Navbar = ({ totalItems }) => {
             <AppBar position="fixed" className={classes.appBar} color="inherit">
                 <Toolbar>
                     <Typography varient="h6" className={classes.title} color="inherit">
-                        <img src={logo} alt="DevineShop" height="25xp" className={classes.image} />
-                        DevineShop
+                        <img src={logo} alt="DevilShop" height="25xp" className={classes.image} />
+                        DevilShop
                     </Typography>
                     <div className={classes.grow} />
                         <div className={classes.button}>

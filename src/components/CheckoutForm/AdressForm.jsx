@@ -20,7 +20,7 @@ const AdressFrom = ({ checkoutToken }) => {
     const countries = Object.entries(shippingCountries).map(([code, name]) => ({ id: code, label: name }));
 
     const fetchShippingCountries = async (checkoutTokenId) => {
-        const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
+      const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
 
         setShippingCountries(countries);
         setShippingCountry(Object.keys(countries)[0]);
@@ -31,7 +31,7 @@ const AdressFrom = ({ checkoutToken }) => {
     }, []);
 
     return (
-        <div>
+        <>
             <Typography variant="h5" gutterBottom>Shipping Adress</Typography>
             <FormProvider {...methods}>
                 <form onSubmit=''>
@@ -47,7 +47,7 @@ const AdressFrom = ({ checkoutToken }) => {
                             <Select value={shippingCountry} fullWidth onChange={(e) => setShippingCountry(e.target.value)}>
                                 {countries.map((country) => (
                                     <MenuItem key={country.id} value={country.id}>
-                                    {country.label}
+                                        {country.label}
                                 </MenuItem>
                                 ))}
                             </Select>
@@ -71,7 +71,7 @@ const AdressFrom = ({ checkoutToken }) => {
                     </Grid>
                 </form>
             </FormProvider>
-        </div>
+        </>
     )
 }
 

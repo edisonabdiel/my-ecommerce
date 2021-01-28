@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button } from '@material-ui/core';
 
-import AdressForm from '../AdressFrom';
+import { commerce } from '../../../lib/commerce';
+import AdressForm from '../AdressForm';
 import PaymentForm from '../PaymentForm';
 
 import useStyles from './styles'
@@ -9,9 +10,24 @@ import useStyles from './styles'
 
 const steps = ['Shipping adress', 'Payment details'];
 
-const Checkout = () => {
-    const [activeStep, setActiveStep] = useState(1);
+const Checkout = ({ cart }) => {
+    const [activeStep, setActiveStep] = useState(0);
+    const [checkoutToken, setCheckoutToken] = useState(null);
     const classes = useStyles();
+
+    useEffect(() => {
+        const generateToken = async () => {
+            try {
+                const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
+
+                setCheckoutToken(token);
+            } catch (error) {
+
+            }
+        }
+
+        generateToken();
+    }, [cart]);
 
     const Confirmation = () => (
         <div>
@@ -21,11 +37,11 @@ const Checkout = () => {
 
 
     const Form = () => activeStep === 0
-        ? <AdressForm />
+        ? <AdressForm checkoutToken={ checkoutToken }/>
         : <PaymentForm />
 
     return (
-        <AdressForm>
+        <>
             <div className={classes.toolbar} />
             <main className={classes.layout}>
                 <Paper className={classes.paper}>
@@ -34,13 +50,13 @@ const Checkout = () => {
                         {steps.map((step) => (
                             <Step key={step}>
                                 <StepLabel>{step}</StepLabel>
-                          </Step>
-                      ))}
+                            </Step>
+                        ))}
                     </Stepper>
-                    {activeStep === steps.length ? <Confirmation /> : <Form />}
+                    {activeStep === steps.length ? <Confirmation /> : checkoutToken && <Form />}
                 </Paper>
             </main>
-        </AdressForm>
+        </>
     )
 }
 

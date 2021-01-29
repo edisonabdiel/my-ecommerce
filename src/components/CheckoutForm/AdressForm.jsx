@@ -45,9 +45,9 @@ const AdressFrom = ({ checkoutToken }) => {
                         <Grid item xs={12} sm={6}>
                             <InputLabel>Shipping Country</InputLabel>
                             <Select value={shippingCountry} fullWidth onChange={(e) => setShippingCountry(e.target.value)}>
-                                {countries.map((country) => (
-                                    <MenuItem key={country.id} value={country.id}>
-                                        {country.label}
+                                {countries.map((i) => (
+                                    <MenuItem key={i.id} value={i.id}>
+                                        {i.label}
                                 </MenuItem>
                                 ))}
                             </Select>

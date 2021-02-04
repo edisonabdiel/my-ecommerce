@@ -11,9 +11,9 @@ const PaymentForm = ({ checkoutToken, shippingData, nextStep, backStep, onCaptur
     const subtotal = checkoutToken.live.subtotal.formatted_with_symbol;
 
     const handleSubmit = async (event, elements, stripe) => {
-        event.prevetDefault()
+        event.preventDefault();
         
-        if (!stripe || elements) return;
+        if (!stripe || !elements) return;
 
         const cardElement = elements.getElement(CardElement)
 
@@ -37,18 +37,21 @@ const PaymentForm = ({ checkoutToken, shippingData, nextStep, backStep, onCaptur
                     postal_zip_code: shippingData.zip,
                     country: shippingData.shippingCountry,
                 },
-                fullfillment: { shipping_method: shippingData.shippingOption },
+                fulfillment: { shipping_method: shippingData.shippingOption },
                 payment: {
                     gateway: 'stripe',
                     stripe: {
                         payment_method_id: paymentMethod.id
-                    }
-                }
-            }
-            onCaptureCheckout(checkoutToken.Id, orderData);
+                    },
+                },
+            };
+            onCaptureCheckout(checkoutToken.id, orderData);
 
+            console.log(orderData)
+
+            nextStep();
         }
-    }
+    };
 
     return (
         <>
@@ -70,7 +73,6 @@ const PaymentForm = ({ checkoutToken, shippingData, nextStep, backStep, onCaptur
                         </form>
                     )}
                 </ElementsConsumer>
-
             </Elements>
         </>
     )
